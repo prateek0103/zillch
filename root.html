@@ -15,7 +15,7 @@
                     <input ng-model='searchTerm' ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
                     <label for="icon_prefix">Search</label>
                 </div>
-                <div ng-click='search()' class="col valign">
+                <div ng-click='searchnow()' class="col valign">
                     <a class="waves-effect waves-light btn"><i class="material-icons left">search</i>go</a>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <input ng-model='searchTerm' ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
                     <label for="icon_prefix">Search</label>
                 </div>
-                <div ng-click='search()' class="col s4 valign">
+                <div ng-click='searchnow()' class="col s4 valign">
                     <a class="waves-effect waves-light btn right"><i class="material-icons left">search</i>go</a>
                 </div>
             </div>
@@ -48,20 +48,20 @@
             </div>
             <div class="valign col s3">
                 <h6>
-              <a ng-href='{{recipe.url}}'>{{recipe.name}}</a>
+              <a ng-href='{{recipe.url}}'>{{recipe._source.name}}</a>
             </h6>
             </div>
 
             <div class="valign col s3">
                 <ul>
-                    <li ng-repeat='ingredient in recipe.ingredients track by $index'>{{ ingredient }}</li>
+                    <li ng-repeat='ingredient in recipe._source.ingredients track by $index'>{{ ingredient }}</li>
                 </ul>
             </div>
 
             <div class="valign col s3">
                 <p>
-                    {{recipe.description}}
-                    <a ng-href='{{recipe.url}}'>... more at {{recipe.source}}</a>
+                    {{recipe._source.description}}
+                    <a ng-href='{{recipe.url}}'>... more at {{recipe._source.source}}</a>
                 </p>
             </div>
 

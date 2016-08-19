@@ -1,59 +1,6 @@
 var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate', 'ngRoute']);
 
-
-// MyOpenRecipes.factory('recipeService',
-//     ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
-//         var client = elasticsearch({
-//             host: "https://readonly:elasticsearch@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200"
-
-//         });
-
-//         /**
-//          * Given a term and an offset, load another round of 10 recipes.
-//          *
-//          * Returns a promise.
-//          */
-         
-//         var search = function(term, offset){
-
-//             var deferred = $q.defer();
-//             var query = {
-//                 "match": {
-//                     "_all": term
-//                 }
-//             };
-
-//             client.search({
-//                 "index": 'recipes',
-//                 "type": 'recipe',
-//                 "body": {
-//                     "size": 10,
-//                     "from": (offset || 0) * 10,
-//                     "query": query
-//                 }
-//             }).then(function(result) {
-//                 var ii = 0, hits_in, hits_out = [];
-//                 hits_in = (result.hits || {}).hits || [];
-//                 for(;ii < hits_in.length; ii++){
-//                     hits_out.push(hits_in[ii]._source);
-//                 }
-//                 deferred.resolve(hits_out);
-//             }, deferred.reject);
-
-//             return deferred.promise;
-//         };
-
-
-//         return {
-//             "search": search
-//         };
-//     }]
-// );
-
-/**
- * Create a controller to interact with the UI.
- */
- 
+//elasticsearch service
  MyOpenRecipes.service('es', function (esFactory) {
   return esFactory({
     host: 'http://readonly:elasticsearch@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200'
@@ -61,9 +8,11 @@ var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate
 });
  
  
-MyOpenRecipes.controller('recipeCtrl',
-    ['es', '$scope', function(recipes, $scope){
-
+//main controller
+MyOpenRecipes.controller('recipeCtrl', function($scope, es){
+    
+        
+        console.log(es);
 
         // Initialize the scope defaults.
         $scope.recipes = [];        // An array of recipe results to display
@@ -75,7 +24,7 @@ MyOpenRecipes.controller('recipeCtrl',
             var key = $event.which || $event.key;
             //console.log(key);
             if(key === 13)
-                $scope.search();
+                $scope.searchnow();
         }
 
         $scope.doLogin = function(){
@@ -89,9 +38,7 @@ MyOpenRecipes.controller('recipeCtrl',
             }
             else return true;
         }
-
-
-        $scope.search = function(){
+        $scope.searchnow = function(){
             $scope.my.isSearched = true;
             $scope.recipes.length=0;
             var elementOnce = angular.element(document.querySelector('#once'));
@@ -100,9 +47,31 @@ MyOpenRecipes.controller('recipeCtrl',
             $scope.recipes = [];
             $scope.allResults = false;
             console.log($scope.searchTerm);
+            es.search({
+                'index': 'recipes',
+                'type': 'recipe',
+                'body': {
+                    'size': 10,
+                    'from': 0,
+                    'query': {
+                        'match' : {
+                            '_all':$scope.searchTerm
+                            
+                        }
+                        
+                    }
+                }
+            }, function(error, response){
+                if(error) console.log(error);
+                else
+                {
+                    console.log(response);
+                
+                $scope.recipes = response.hits.hits;
+                }
+            });
         };
-    }]
-);
+});
 
 MyOpenRecipes.config(function($routeProvider){
     $routeProvider
@@ -111,9 +80,12 @@ MyOpenRecipes.config(function($routeProvider){
         controller : 'recipeCtrl'
     })
     .when("/login", {
-        templateUrl : "login.html"
+        templateUrl : "login.html",
+        controller : 'recipeCtrl'
     })
     .when("/signup", {
-        templateUrl : "signup.html"
+        templateUrl : "signup.html",
+        controller : 'recipeCtrl'
     });
 });
+
