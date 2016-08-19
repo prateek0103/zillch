@@ -1,7 +1,7 @@
 /**
  * Create the module. Set it up to use html5 mode.
  */
-window.MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate', 'ngRoute'],
+var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate', 'ngRoute'],
     ['$locationProvider', function($locationProvider){
         $locationProvider.html5Mode({enabled : true, requireBase: false});
     }]
@@ -14,7 +14,7 @@ window.MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnim
 MyOpenRecipes.factory('recipeService',
     ['$q', 'esFactory', '$location', function($q, elasticsearch, $location){
         var client = elasticsearch({
-            host: "http://admin:elasticsearch@node2016@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200"
+            host: "https://readonly:elasticsearch@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200"
 
         });
 
@@ -100,15 +100,8 @@ MyOpenRecipes.controller('recipeCtrl',
 
 
         $scope.search = function(){
-
-
-
-
-                $scope.my.isSearched = true;
-                $scope.recipes.length=0;
-
-
-           // console.log($scope.recipes.length);
+            $scope.my.isSearched = true;
+            $scope.recipes.length=0;
             var elementOnce = angular.element(document.querySelector('#once'));
             elementOnce.addClass('ng-hide');
             $scope.page = 0;
@@ -116,29 +109,8 @@ MyOpenRecipes.controller('recipeCtrl',
             $scope.allResults = false;
             console.log($scope.searchTerm);
             $location.search({'q': $scope.searchTerm});
-           // $scope.loadMore();
+           
         };
-
-        /**
-         * Load the next page of results, incrementing the page counter.
-         * When query is finished, push results onto $scope.recipes and decide
-         * whether all results have been returned (i.e. were 10 results returned?)
-         */
-        $scope.loadMore = function(){
-            recipes.search($scope.searchTerm, $scope.page++).then(function(results){
-                if(results.length !== 10){
-                    $scope.allResults = true;
-                }
-
-                var ii = 0;
-                for(;ii < results.length; ii++){
-                    $scope.recipes.push(results[ii]);
-                }
-            });
-        };
-
-        // Load results on first run
-      //  $scope.loadMore();
     }]
 );
 
