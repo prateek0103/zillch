@@ -1,4 +1,4 @@
-var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate', 'ngRoute']);
+var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate', 'ngRoute', 'ui.materialize']);
 
 //elasticsearch service
  MyOpenRecipes.service('es', function (esFactory) {
@@ -8,7 +8,12 @@ var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate
 });
  
  
-//main controller
+MyOpenRecipes.controller('loginController', function($scope) {
+    $scope.emailAdd = "someone@domain.com";
+    $scope.pass = "secureText";
+});
+
+
 MyOpenRecipes.controller('recipeCtrl', function($scope, es){
     
         
@@ -81,7 +86,7 @@ MyOpenRecipes.config(function($routeProvider){
     })
     .when("/login", {
         templateUrl : "login.html",
-        controller : 'recipeCtrl'
+        controller : 'loginController'
     })
     .when("/signup", {
         templateUrl : "signup.html",
