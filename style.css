@@ -1,77 +1,70 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto+Slab:300,700';
-h3{
-      color: black;
+h3 {
+    color: black;
     font-family: 'Roboto Slab', serif;
     font-weight: 700;
 }
-
-label{
+label {
     text-align: left;
 }
 
-h1{
+
+
+h1 {
     color: black;
     font-family: 'Roboto Slab', serif;
     font-weight: 700;
     font-size: 8.0rem;
-
 }
-
-#loginCard{
+#loginCard {
     display: inline-block;
     padding: 32px 48px 0px 48px;
     border: 1px solid #EEE;
 }
-
-.search h1{
+.search h1 {
     font-size: 3rem;
 }
-
-.searched{
-
+.searched {
     display: none;
-
+}
+.input-field .prefix.active {
+    color: #000;
 }
 
-  .input-field .prefix.active {
-     color: #000;
-   }
-
 /* label color */
-   .input-field label {
-     color: #aaa;
-   }
-   /* label focus color */
-   .input-field input[type=text]:focus + label {
-     color: #000;
-   }
-   /* label underline focus color */
-   .input-field input[type=text]:focus {
-     border-bottom: 1px solid #000;
-     box-shadow: 0 1px 0 0 #000;
-   }
 
+.input-field label {
+    color: #aaa;
+}
+
+/* label focus color */
+
+.input-field input[type=text]:focus + label {
+    color: #000;
+}
+
+/* label underline focus color */
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #000;
+    box-shadow: 0 1px 0 0 #000;
+}
 .input-field input[type=text] {
-     border-bottom: 1px solid #aaa;
-     box-shadow: 0 1px 0 0 #aaa;
-   }
-
-
-
+    border-bottom: 1px solid #aaa;
+    box-shadow: 0 1px 0 0 #aaa;
+}
 .result.ng-enter {
-            opacity: 0.0 ;
-            margin-top: 200px ;
-            transition: all ease 150ms ;
-        }
-        .result.ng-enter-stagger {
-            transition-delay: 0.1s ;
-                -webkit-transition-delay: 0.1s ;
-
-
-            transition-duration: 0s ;
-                -webkit-transition-duration: 0s ;
-        }
-        .result.ng-enter-active {
-            opacity: 1.0 ;
-            margin-top: 0px;
-        }
+    opacity: 0.0;
+    margin-top: 200px;
+    transition: all ease 150ms;
+}
+.result.ng-enter-stagger {
+    transition-delay: 0.1s;
+    -webkit-transition-delay: 0.1s;
+    transition-duration: 0s;
+    -webkit-transition-duration: 0s;
+}
+.result.ng-enter-active {
+    opacity: 1.0;
+    margin-top: 0px;
+}
