@@ -3,7 +3,7 @@ var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate
 //elasticsearch service
  MyOpenRecipes.service('es', function (esFactory) {
   return esFactory({
-    host: 'https://readonly:elasticsearch@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200'
+    host: 'http://readonly:elasticsearch@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200'
   });
 });
  
