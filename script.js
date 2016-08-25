@@ -6,20 +6,129 @@ var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate
     host: 'http://readonly:elasticsearch@5483a9ea4e388ef915897a5f32c43023.ap-southeast-1.aws.found.io:9200'
   });
 });
+
+ MyOpenRecipes
+    .service('authentication', authentication);
+
+  authentication.$inject = ['$http', '$window'];
+  function authentication ($http, $window) {
+
+    var saveToken = function (token) {
+      $window.localStorage['recipe-token'] = token;
+    };
+
+    var getToken = function () {
+      return $window.localStorage['recipe-token'];
+    };
+
+    var isLoggedIn = function() {
+      var token = getToken();
+      var payload;
+
+      if(token){
+        payload = token.split('.')[1];
+        payload = $window.atob(payload);
+        payload = JSON.parse(payload);
+
+        return payload.exp > Date.now() / 1000;
+      } else {
+        return false;
+      }
+    };
+
+    var currentUser = function() {
+      if(isLoggedIn()){
+        var token = getToken();
+        var payload = token.split('.')[1];
+        payload = $window.atob(payload);
+        payload = JSON.parse(payload);
+        return {
+          email : payload.email,
+          name : payload.name
+        };
+      }
+    };
+
+    register = function(user) {
+      return $http.post('http://search-engine-upwork-jsisgod.c9users.io:8081/api/register', user).success(function(data){
+        saveToken(data.token);
+      });
+    };
+
+    login = function(user) {
+      return $http.post('https://search-engine-upwork-jsisgod.c9users.io:8081/api/login', user).success(function(data) {
+        saveToken(data.token);
+      });
+    };
+
+    logout = function() {
+      $window.localStorage.removeItem('recipe-token');
+    };
+
+    return {
+      currentUser : currentUser,
+      saveToken : saveToken,
+      getToken : getToken,
+      isLoggedIn : isLoggedIn,
+      register : register,
+      login : login,
+      logout : logout
+    };
+  }
  
  
-MyOpenRecipes.controller('loginController', function($scope) {
-    $scope.emailAdd = "someone@domain.com";
-    $scope.pass = "secureText";
+MyOpenRecipes.controller('loginController', function($scope, authentication, $location) {
+    
+    $scope.credentials = {
+      email : "",
+      password : ""
+    };
+
+    $scope.onSubmit = function () {
+      authentication
+        .login($scope.credentials)
+        .error(function(err){
+          alert(err);
+        })
+        .then(function(){
+          $location.path('/profile');
+        });
+    };
 });
 
+MyOpenRecipes.controller('signupCtrl', function($scope, authentication, $location) {
 
-MyOpenRecipes.controller('recipeCtrl', function($scope, es){
+    $scope.credentials = {
+      name : "",
+      email : "",
+      password : ""
+    };
+
+    $scope.onSubmit = function () {
+      console.log('Submitting registration');
+      authentication
+        .register($scope.credentials)
+        .error(function(err){
+          alert(err);
+        })
+        .then(function(){
+          $location.path('/');
+        });
+    };
+});
+
+MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
     
         
-        console.log(es);
+        console.log(authentication);
 
+        
         // Initialize the scope defaults.
+        $scope.userDetails = authentication.currentUser();
+        $scope.isLoggedIn = authentication.isLoggedIn();
+        
+        console.log($scope.userDetails);
+        
         $scope.recipes = [];        // An array of recipe results to display
         $scope.page = 0;            // A counter to keep track of our current page
         $scope.allResults = false;  // Whether or not all results have been found.
@@ -90,7 +199,11 @@ MyOpenRecipes.config(function($routeProvider){
     })
     .when("/signup", {
         templateUrl : "signup.html",
-        controller : 'recipeCtrl'
+        controller : 'signupCtrl'
+    })
+    .when("/profile", {
+        templateUrl : "profile.html",
+        controller : 'profileCtrl'
     });
 });
 
