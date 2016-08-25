@@ -1,7 +1,7 @@
 <div class="card-panel" ng-hide='my.isSearched' id='once'>
     <div class="row">
         <div class="col s12">
-            <a  ng-hide="isLoggedIn" href='#login' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-account"></i>log in</a>
+            <a  ng-hide="isLoggedIn" href='#login' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-login-variant"></i>log in</a>
             <a  ng-show="isLoggedIn" href='#profile' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-account"></i>Hi, {{userDetails.name}}</a>
         </div>
     </div>
@@ -24,7 +24,8 @@
 <div ng-show='my.isSearched' ng-cloak class="ng-cloak card-panel search">
     <div class="row">
         <div class="col s12">
-            <a href='#login' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-account"></i>login</a>
+            <a  ng-hide="isLoggedIn" href='#login' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi login-variant"></i>log in</a>
+            <a  ng-show="isLoggedIn" href='#profile' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-account"></i>Hi, {{userDetails.name}}</a>
         </div>
     </div>
     <div class="row valign-wrapper">

@@ -91,7 +91,7 @@ MyOpenRecipes.controller('loginController', function($scope, authentication, $lo
           alert(err);
         })
         .then(function(){
-          $location.path('/profile');
+          $location.path('/');
         });
     };
 });
@@ -112,10 +112,27 @@ MyOpenRecipes.controller('signupCtrl', function($scope, authentication, $locatio
           alert(err);
         })
         .then(function(){
-          $location.path('/');
+          $location.path('/profile');
         });
     };
 });
+
+MyOpenRecipes.controller('profileCtrl', function($scope, authentication, $location) {
+
+    $scope.isLoggedIn = authentication.isLoggedIn();
+    if(!$scope.isLoggedIn){
+      $location.path('/login');
+    }
+    else{
+    $scope.user = authentication.currentUser();
+    $scope.logout = function(){
+      authentication.logout();
+      $location.path('/');
+    }
+    }
+    
+});
+
 
 MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
     
@@ -141,9 +158,6 @@ MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
                 $scope.searchnow();
         }
 
-        $scope.doLogin = function(){
-            console.log("works");
-        }
         $scope.noResult = function(){
             if($scope.my.isSearched){
                 if($scope.recipes.length>0)
