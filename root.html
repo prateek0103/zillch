@@ -1,72 +1,62 @@
-<div class="card-panel" ng-hide='my.isSearched' id='once'>
+<div class="center-search" ng-hide='my.isSearched' id='once'>
+
     <div class="row">
         <div class="col s12">
-            <a  ng-hide="isLoggedIn" href='#login' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-login-variant"></i>log in</a>
-            <a  ng-show="isLoggedIn" href='#profile' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-account"></i>Hi, {{userDetails.name}}</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            <h1 class="center-align animated tada">Zillch</h1>
+            <h3 class="center-align animated tada white-text">Search for Freedom</h3>
         </div>
     </div>
 
-    <div class="row valign-wrapper animated wobble" id="searchBox">
-        <div class="input-field col s8 m4 l3 offset-l4 offset-m3 valign">
+    <div class="row animated wobble" id="searchBox">
+        <div class="input-field col s8 m4 l4 offset-l4 offset-m3">
             <input input-field ng-model='searchTerm' ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
-            <label for="icon_prefix">Eg. Free AWS Credits</label>
-        </div>
-        <div ng-click='searchnow()' class="col valign">
-            <a class="waves-effect waves-light btn"><i class="material-icons left mdi mdi-magnify"></i>go</a>
+            <label for="icon_prefix" class="white-text">Eg. Free AWS Credits</label>
         </div>
     </div>
-</div>
-<div ng-show='my.isSearched' ng-cloak class="ng-cloak card-panel search">
     <div class="row">
-        <div class="col s12">
-            <a  ng-hide="isLoggedIn" href='#login' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi login-variant"></i>log in</a>
-            <a  ng-show="isLoggedIn" href='#profile' class="waves-effect waves-blue btn-flat right"><i class="material-icons left mdi mdi-account"></i>Hi, {{userDetails.name}}</a>
+        <div ng-click='searchnow()' class="col s12 center-align">
+            <a class="waves-effect waves-light btn pale-green"><i class="material-icons left mdi mdi-magnify"></i>go</a>
         </div>
     </div>
-    <div class="row valign-wrapper">
-        <div class="col s4 valign">
-            <h1>Zillch</h1>
-        </div>
-        <div class="input-field col s4 valign">
-            <input input-field ng-model='searchTerm' ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
-            <label for="icon_prefix">Search</label>
-        </div>
-        <div ng-click='searchnow()' class="col s4 valign">
-            <a class="waves-effect waves-light btn right"><i class="material-icons left mdi mdi-magnify"></i>go</a>
+
+
+</div>
+<div ng-show='my.isSearched' ng-cloak class="ng-cloak search">
+    <div class="row amber accent-4 valign-wrapper">
+
+        <input input-field ng-model='searchTerm' class="col offset-s4 s3 valign" ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
+
+        <div ng-click='searchnow()' class="valign">
+            <a class="waves-effect waves-light btn right pale-green"><i class="material-icons left mdi mdi-magnify"></i>go</a>
         </div>
     </div>
 </div>
 
 
-
-<div class='row valign-wrapper card-panel result' ng-cloak ng-repeat='recipe in recipes'>
-    <div class="valign col s2">
-        <img src="images/placeholder.png" alt="" class="circle responsive-img">
-    </div>
-    <div class="valign col s3">
-        <h6>
+<div class="container">
+    <div class='row valign-wrapper card-panel transparent result' ng-cloak ng-repeat='recipe in recipes'>
+        <div class="valign col s2">
+            <img src="images/placeholder.png" alt="" class="circle responsive-img">
+        </div>
+        <div class="valign col s3">
+            <h6>
               <a ng-href='{{recipe.url}}'>{{recipe._source.name}}</a>
             </h6>
-    </div>
+        </div>
 
-    <div class="valign col s3">
-        <ul>
-            <li ng-repeat='ingredient in recipe._source.ingredients track by $index'>{{ ingredient }}</li>
-        </ul>
-    </div>
+        <div class="valign col s3">
+            <ul>
+                <li ng-repeat='ingredient in recipe._source.ingredients track by $index'>{{ ingredient }}</li>
+            </ul>
+        </div>
 
-    <div class="valign col s3">
-        <p>
-            {{recipe._source.description}}
-            <a ng-href='{{recipe.url}}'>... more at {{recipe._source.source}}</a>
-        </p>
-    </div>
+        <div class="valign col s3">
+            <p>
+                {{recipe._source.description}}
+                <a ng-href='{{recipe.url}}'>... more at {{recipe._source.source}}</a>
+            </p>
+        </div>
 
+    </div>
 </div>
 <div class='row valign-wrapper card-panel result' ng-hide='noResult()'>
     <span class="blue-text text-darken-2">No results</span>

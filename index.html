@@ -11,15 +11,45 @@
         .ng-cloak {
             display: none !important;
         }
-
     </style>
 </head>
 
 
-<body class="light-blue lighten-2">
-    <div ng-app='myOpenRecipes' ng-cloak class="ng-cloak container">
-        <div ng-view></div>
+<body class="orange">
+    <div ng-app='myOpenRecipes' ng-cloak class="ng-cloak">
+        <header>
+            <nav>
+                <div class="nav-wrapper white black-text">
+                    <a href="#/" class="brand-logo  light-green-text accent-3-text"><img height="70" src="./logo.png"></img></a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi mdi-menu black-text"></i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a class="black-text"><i class="mdi mdi-share-variant"></i></a></li>
+                        <li><a ng-hide="isLoggedIn" href='#login' class="black-text"><i class="material-icons left mdi mdi-login-variant"></i>LOGIN</a>
+                            <a ng-show="isLoggedIn" href='#profile' class="black-text"><i class="material-icons left mdi mdi-account"></i>Hi, {{userDetails.name}}</a>
+                        </li>
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li><a class="black-text"><i class="mdi mdi-share-variant"></i></a></li>
+                        <li><a ng-hide="isLoggedIn" href='#login' class="black-text"><i class="material-icons left mdi mdi-login-variant"></i>LOG IN</a>
+                            <a ng-show="isLoggedIn" href='#profile' class="black-text"><i class="material-icons left mdi mdi-account"></i>Hi, {{userDetails.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <main>
+
+            <div ng-view></div>
+            <footer ng-controller="recipeCtrl" ng-style="{'position' : footerStyle}" class="page-footer amber accent-4">
+                <div class="footer-copyright">
+                    <div class="container center-align">&copy; 2016 Zillch Search
+                    </div>
+                </div>
+            </footer>
     </div>
+
+    </main>
+
 
 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -28,7 +58,7 @@
     <script src="bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
     <script src="bower_components/elasticsearch/elasticsearch.angular.js" type="text/javascript"></script>
-    <script type="text/javascript" src="bower_components/angular-materialize/src/angular-materialize.js"></script>>
+    <script type="text/javascript" src="bower_components/angular-materialize/src/angular-materialize.js"></script>
     <script src="./script.js" type="text/javascript"></script>
 </body>
 

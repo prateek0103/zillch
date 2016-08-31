@@ -56,7 +56,7 @@ var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate
     };
 
     login = function(user) {
-      return $http.post('https://search-engine-upwork-jsisgod.c9users.io:8081/api/login', user).success(function(data) {
+      return $http.post('http://search-engine-upwork-jsisgod.c9users.io:8081/api/login', user).success(function(data) {
         saveToken(data.token);
       });
     };
@@ -135,7 +135,7 @@ MyOpenRecipes.controller('profileCtrl', function($scope, authentication, $locati
 
 
 MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
-    
+     
         
         console.log(authentication);
 
@@ -150,6 +150,7 @@ MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
         $scope.page = 0;            // A counter to keep track of our current page
         $scope.allResults = false;  // Whether or not all results have been found.
         $scope.my = { isSearched: false };
+        $scope.footerStyle = "absolute";
 
         $scope.checkEnter = function($event){
             var key = $event.which || $event.key;
@@ -167,6 +168,8 @@ MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
             else return true;
         }
         $scope.searchnow = function(){
+            $scope.footerStyle = "relative";
+            console.log($scope.footerStyle);
             $scope.my.isSearched = true;
             $scope.recipes.length=0;
             var elementOnce = angular.element(document.querySelector('#once'));
@@ -221,3 +224,6 @@ MyOpenRecipes.config(function($routeProvider){
     });
 });
 
+$(document).ready(function(){
+  $(".button-collapse").sideNav();
+});

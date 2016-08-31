@@ -1,9 +1,9 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto+Slab:300,700';
+
 h3 {
     color: black;
-    font-family: 'Roboto Slab', serif;
-    font-weight: 700;
 }
+
+
 label {
     text-align: left;
 }
@@ -40,15 +40,52 @@ h1 {
     color: #000;
 }
 
+.transparent{
+    background-color: rgba(255,255,255,0.8) !important;
+    height: 120px;
+}
+
+input, select, textarea{
+    color: #ffffff;
+}
+
+.pale-green{
+    background-color: #10da00;
+}
+
+.pale-green:hover{
+    background-color: #10dd00;
+}
+
+textarea:focus, input:focus {
+    color: #ffffff;
+}
+
+footer{
+  right: 0;
+  bottom: 0;
+  left: 0;    
+}
+
+.center-search{
+    position: absolute;
+    top:30%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
 /* label underline focus color */
 
 .input-field input[type=text]:focus {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
 }
 .input-field input[type=text] {
-    border-bottom: 1px solid #aaa;
-    box-shadow: 0 1px 0 0 #aaa;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 0 0 #ddd;
 }
 .result.ng-enter {
     opacity: 0.0;
