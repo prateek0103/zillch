@@ -2,13 +2,13 @@
 
     <div class="row">
         <div class="col s12">
-            <h3 class="center-align animated tada white-text">Search for Freedom</h3>
+            <h4 class="center-align animated tada white-text">Search for Freedom</h4>
         </div>
     </div>
 
     <div class="row animated wobble" id="searchBox">
-        <div class="input-field col s8 m4 l4 offset-l4 offset-m3">
-            <input input-field ng-model='searchTerm' ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
+        <div class="input-field col s12 m4 l4 offset-l4 offset-m3">
+            <input class="white-label" input-field ng-model='searchTerm' ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
             <label for="icon_prefix" class="white-text">Eg. Free AWS Credits</label>
         </div>
     </div>
@@ -23,7 +23,7 @@
 <div ng-show='my.isSearched' ng-cloak class="ng-cloak search">
     <div class="row amber accent-4 valign-wrapper">
 
-        <input input-field ng-model='searchTerm' class="col offset-s4 s3 valign" ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
+        <input input-field ng-model='searchTerm' class="col offset-s4 s3 valign afterSearch white-label" ng-keypress='checkEnter($event)' id="icon_prefix" type="text">
 
         <div ng-click='searchnow()' class="valign">
             <a class="waves-effect waves-light btn right pale-green"><i class="material-icons left mdi mdi-magnify"></i>go</a>
@@ -45,14 +45,14 @@
 
         <div class="valign col s3">
             <ul>
-                <li ng-repeat='ingredient in recipe._source.ingredients track by $index'>{{ ingredient }}</li>
+                <li ng-repeat='ingredient in recipe._source.ingredients | limitTo:4'>{{ ingredient | limitTo:5}}...</li>
             </ul>
         </div>
 
         <div class="valign col s3">
             <p>
-                {{recipe._source.description}}
-                <a ng-href='{{recipe.url}}'>... more at {{recipe._source.source}}</a>
+                {{recipe._source.description | limitTo:15}}...
+                <a ng-href='{{recipe.url}}'>more at {{recipe._source.source}}</a>
             </p>
         </div>
 

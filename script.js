@@ -78,17 +78,17 @@ var MyOpenRecipes = angular.module('myOpenRecipes', ['elasticsearch', 'ngAnimate
  
  
 MyOpenRecipes.controller('loginController', function($scope, authentication, $location) {
-    
-    $scope.credentials = {
-      email : "",
-      password : ""
-    };
+  
+  $scope.credentials = {
+    email : "",
+    password : ""
+  };
 
     $scope.onSubmit = function () {
       authentication
         .login($scope.credentials)
         .error(function(err){
-          alert(err);
+          console.log(err);
         })
         .then(function(){
           $location.path('/');
@@ -133,6 +133,17 @@ MyOpenRecipes.controller('profileCtrl', function($scope, authentication, $locati
     
 });
 
+MyOpenRecipes.controller('navCtrl', function($scope, authentication, $interval){
+  $scope.isLoggedIn = authentication.isLoggedIn();
+  
+ var checkLogin = function(){
+    $scope.isLoggedIn = authentication.isLoggedIn();
+    $scope.userDetails = authentication.currentUser();
+  }
+  
+  $interval(checkLogin, 1000);
+});
+
 
 MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
      
@@ -150,7 +161,6 @@ MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
         $scope.page = 0;            // A counter to keep track of our current page
         $scope.allResults = false;  // Whether or not all results have been found.
         $scope.my = { isSearched: false };
-        $scope.footerStyle = "absolute";
 
         $scope.checkEnter = function($event){
             var key = $event.which || $event.key;
@@ -168,7 +178,8 @@ MyOpenRecipes.controller('recipeCtrl', function($scope, es, authentication){
             else return true;
         }
         $scope.searchnow = function(){
-            $scope.footerStyle = "relative";
+            var footer = angular.element(document.querySelector('footer'));
+            footer.addClass('relativePosition');
             console.log($scope.footerStyle);
             $scope.my.isSearched = true;
             $scope.recipes.length=0;
